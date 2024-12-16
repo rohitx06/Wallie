@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us</title>
+    <link rel="stylesheet" href="about.css" />
+  </head>
+  <body>
+    <header class="parallax" id="parallax-header">
+      <div class="overlay">
+        <h1>Wallie | About Us</h1>
+        <p>Your ultimate destination for stunning wallpapers</p>
+      </div>
+    </header>
+
+    <section class="content">
+      <h2>Our Story</h2>
+      <p>
+        Welcome to our wallpaper haven! We started with a passion for aesthetics
+        and design, curating the most beautiful wallpapers for your screens. Our
+        mission is to bring creativity and inspiration to your digital space.
+      </p>
+    </section>
+
+    <section class="parallax" id="parallax-middle">
+      <div class="overlay">
+        <h2>Why Choose Us?</h2>
+      </div>
+    </section>
+
+    <section class="content">
+      <h2>Our Mission</h2>
+      <p>
+        To provide high-quality, handpicked wallpapers that make your devices a
+        reflection of your unique style.
+      </p>
+    </section>
+
+    <footer>
+      <p>&copy; 2024 Wallie. All rights reserved.</p>
+    </footer>
+  </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const parallaxElements = document.querySelectorAll(".parallax");
+      const contentSections = document.querySelectorAll(".content");
+
+      // Adjust background position dynamically on scroll
+      window.addEventListener("scroll", () => {
+        const scrollPosition = window.scrollY;
+
+        parallaxElements.forEach((element) => {
+          const elementOffset = element.offsetTop;
+          const elementHeight = element.offsetHeight;
+
+          // Check if the section is in view
+          if (
+            scrollPosition >= elementOffset - window.innerHeight &&
+            scrollPosition <= elementOffset + elementHeight
+          ) {
+            const speed = 0.5; // Adjust speed for parallax
+            const offset = (scrollPosition - elementOffset) * speed;
+            element.style.backgroundPosition = `center ${-offset}px`; // Smoothly move background
+          }
+        });
+      });
+
+      // Intersection Observer for fading in content
+      const observerOptions = {
+        threshold: 0.2, // Element must be 20% visible
+      };
+
+      const revealOnScroll = (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      };
+
+      const observer = new IntersectionObserver(
+        revealOnScroll,
+        observerOptions
+      );
+
+      // Observe parallax and content sections
+      [...parallaxElements, ...contentSections].forEach((element) => {
+        observer.observe(element);
+      });
+    });
+  </script>
+</html>
