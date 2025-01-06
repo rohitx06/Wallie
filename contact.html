@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - Geolocation Feature</title>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      #map {
+        height: 400px;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container my-5">
+      <h1 class="text-center">Contact Us</h1>
+      <div class="row">
+        <div class="col-md-6">
+          <h3>Your Current Location</h3>
+          <div id="map"></div>
+        </div>
+        <div class="col-md-6">
+          <h3>Send Us a Message</h3>
+          <form>
+            <div class="form-group">
+              <label for="name">Your Name:</label>
+              <input
+                type="text"
+                id="name"
+                class="form-control"
+                placeholder="Enter your name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address:</label>
+              <input
+                type="email"
+                id="email"
+                class="form-control"
+                placeholder="Enter your email"
+              />
+            </div>
+            <div class="form-group">
+              <label for="message">Message:</label>
+              <textarea
+                id="message"
+                class="form-control"
+                rows="4"
+                placeholder="Write your message"
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Leaflet.js for Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <script>
+      // Initialize the map
+      const map = L.map("map").setView([0, 0], 13); // Default view
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "© OpenStreetMap contributors",
+      }).addTo(map);
+
+      let marker; // Declare marker variable
+
+      // Geolocation to track user location
+      function updateLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.watchPosition(
+            (position) => {
+              const { latitude, longitude } = position.coords;
+              console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+
+              map.setView([latitude, longitude], 13);
+
+              // Update the marker's position or create a new one
+              if (!marker) {
+                marker = L.marker([latitude, longitude])
+                  .addTo(map)
+                  .bindPopup("You're here!");
+              } else {
+                marker.setLatLng([latitude, longitude]);
+              }
+              marker.openPopup();
+            },
+            (error) => {
+              switch (error.code) {
+                case error.PERMISSION_DENIED:
+                  console.error("User denied the request for Geolocation.");
+                  break;
+                case error.POSITION_UNAVAILABLE:
+                  console.error("Location information is unavailable.");
+                  break;
+                case error.TIMEOUT:
+                  console.error("The request to get user location timed out.");
+                  break;
+                default:
+                  console.error("An unknown error occurred.");
+                  break;
+              }
+            }
+          );
+        } else {
+          alert("Geolocation is not supported by your browser.");
+        }
+      }
+      updateLocation();
+    </script>
+  </body>
+</html>

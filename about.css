@@ -25,12 +25,12 @@ header, section {
 }
 
 .parallax#parallax-header {
-  background-image: url('asset/p.jpg'); /* Replace with your image path */
+  background-image: url('asset/pic1.jpg'); /* Replace with your image path */
   background-color: #000; /* Fallback background color */
 }
 
 .parallax#parallax-middle {
-  background-image: url('asset/p1.jpg'); /* Replace with your image path */
+  background-image: url('asset/pic3.jpg'); /* Replace with your image path */
   background-color: #000; /* Fallback background color */
 }
 
