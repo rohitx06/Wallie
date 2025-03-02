@@ -6,11 +6,13 @@ body {
     min-height: 100vh;
 }
 header {
-    background-color: #5C5D8D;
-    color: white;
+    background-color: #d0d1da;
+    color: black;
     text-align: center;
-    padding: 20px 0;
+    padding: 10px 0;
+    
 }
+
 .container {
     flex: 1;
 }

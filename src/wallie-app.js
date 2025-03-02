@@ -16,8 +16,11 @@ app.controller("GalleryController", function ($scope) {
   function fetchImages() {
     Object.keys(categoryKeywords).forEach((category) => {
       $scope.categories[category] = Array.from({ length: 6 }, (_, i) => ({
+        title: category + " Image " + (i + 1),
         category: category,
-        url: `https://picsum.photos/seed/${categoryKeywords[category]}${i}/300/200`
+        url: `https://picsum.photos/seed/${categoryKeywords[category]}${i}/300/200`,
+        rating: (Math.random() * 4 + 1).toFixed(1), // Random rating between 1.0 - 5.0
+        uploaded: new Date(2024, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28)).toISOString()
       }));
     });
   }
@@ -34,12 +37,12 @@ app.controller("GalleryController", function ($scope) {
 
   // ng-click example: Select image
   $scope.selectImage = function (image) {
-    alert("You clicked on " + image.category);
+    alert("You clicked on " + image.title);
   };
 
   // ng-mouseover example
   $scope.showHoverMessage = function (image) {
-    console.log("Hovered over " + image.category);
+    console.log("Hovered over " + image.title);
   };
 
   // ng-blur example
